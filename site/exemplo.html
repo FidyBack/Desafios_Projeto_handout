@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <title>Algorítmo de Karatsuba para multiplicação</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&display=swap">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+
+<h1>Algorítmo de Karatsuba para multiplicação</h1>
+
+<p>Durante muito foi pensado que a complexidade mínima que poderia ser conseguida a partir da multiplicação de dois numeros de n termos era de O(n²), porém Anatolii Alexeievich Karatsuba descobriu em uma semana de pesquisa um algorítmo de complexidade menor que este, o algorítmo de Karatsuba.</p>
+
+<h2>Introdução</h2>
+
+<p>Entre as aplicações mais comuns do método de Karatsuba está o seu uso na criptografia na criação de chaves criptográficas, já que esse algoritmo em específico é muito mais eficiente na multiplicação de numeros de muitos dígitos do que o método original de multiplicação.</p>
+
+<h2>O Método Clássico</h2>
+
+<p>No método normal de multiplicação, por exemplo quando se multiplica os numeros \(ab\) por \(cd\), se simplificarmos a operação em multiplicações de um dígito e adição, temos que a resolução de  \(ab \cdot cd = ac \cdot 10^2 + (bc + ad) \cdot 10^1 + bd\), ou seja, no algorítmo, o numero de multiplicações individuais feitas é igual a \(n^2\).</p>
+
+<p>Como emeplo, se tivermos \(A = 1234\) e \(B = 3456\), teríamos que:</p>
+
+<h2>O Método de Karatsuba</h2>
+
+<p>No método normal de Karatsuba, é abordado o problema da multiplicação usando um método de divisão e conquista, onde ele, em primeira instância, separa cada digitos em duas partes: \(A_0\), \(A_1\), \(B_0\) e \(B_1\), sendo que cada parte possui \(n/2\) do tamanho original.</p>
+
+<p>Usando o mesmo A e B do método clássico, teríamos:</p>
+
+<p>\[A_0 = 12, A_1 = 34, B_0 = 34, B_1 = 56\]</p>
+
+<p>Bseando-se nessa separação, Anatolii chegou em uma relação de \(A_0\) e \(A_1\) tal que:</p>
+
+<p>\[A = A_0 \cdot 10^{n/2} + A_1\]</p>
+
+<p>onde o mesmo serve para \(B_0\) e \(B_1\):</p>
+
+<p>\[B = B_0 \cdot 10^{n/2} + B_1\]</p>
+
+<p>Usando o nosso exemplo acima, podemos mostrar então que:</p>
+
+<p>\[12 \cdot 10^2 + 34 = 1234\] 
+\[34 \cdot 10^2 + 56 = 3456\]</p>
+
+<p>Podemos, assim, escrever:</p>
+
+<p>\[A \cdot B = (A_0 \cdot 10^{n/2} + A_1) \cdot (B_0 \cdot 10^{n/2} + B_1)\]</p>
+
+<p>expandindo a equação, chegamos em:</p>
+
+<p>\[A \cdot B = A_0 B_0 \cdot 10^n + (A_0 B_1 + A_1 B_0) \cdot 10^{n/2} + A_1 B_1\]</p>
+
+<p>e é nesse momento que o método de Karatsuba se destaca do modelo clássico. Como é possível observar, nesse ponto temos 4 multiplicações: \(A_0 B_0\), \(A_0 B_1\), \(A_1 B_0\) e \(A_1 B_1\), porém, fazendo uma pequena manipulação matemática, é possível escrever \((A_0 B_1 + A_1 B_0)\) como \((A_0 + A_1)(B_0 + B_1) - A_0 B_0 - A_1 B_1\), consegue ver como? Leve um tempo para descobrir antes de continuar.</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>O fato a ser ponderado é que \((A_0 + A_1)(B_0 + B_1) = A_0 B_1 + A_1 B_0 + A_0 B_0 + A_1 B_1\).
+Isso fez com que fosse possível resolver uma multiplicação fazendo apenas 3 operações de multiplicação: \(A_0 B_0, A_1 B_1\) e \((A_0 + A_1)(B_0 + B_1)\), e não 4 como no método clássico, o que reduz o consumo computacional e a complexidade do algoritmo.</p>
+
+<p>No fim, a multiplicação de dois numeros pode ser escrita por:</p>
+
+<p>\[ A \cdot B = A_0 B_0 \cdot 10^n + ((A_0 + A_1)(B_0 + B_1) - A_0 B_0 - A_1 B_1) \cdot 10^{n/2} + A_1 B_1 \]</p>
+
+<h2>Questão 1</h2>
+
+<p>Resolva o exemplo dado com \(A = 1234\) e \(B = 3456\) usando o método de Karatsuba e confira se o resultado bate na calculadora</p>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Questão 2</h2>
+
+<p>Escreva um Pseudocódigo recursivo que resolva esse problema</p>
+
+<blockquote><p>A base desse algorítmo seria n ser menor a um n0, já que nesse caso a multiplicação normal seria mais eficiente.</p></blockquote>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<p>Para o Pseudocódigo, você deve ter chegado em algo parecido com isso:</p>
+
+<pre class="prettybox"><code class="prettyprint">karatsuba(A, B)
+    if (A &lt; n0) or (B &lt; n0)
+        return A × B
+
+    m1 = size(A)
+    m2 = size(B)
+
+    A0, A1 = divide(A, m2)
+    B0, B1 = divide(B, m2)
+
+    z0 = karatsuba(A1, B1)
+    z1 = karatsuba((A0 + A1), (B0 + B1))
+    z2 = karatsuba(A0, B0)
+
+    return (z2 × 10^m2 + ((z1 - z2 - z0) × 10^(m2/2)) + z0</code></pre>
+
+<h3><a href="">continuar</a> ou <a href="">terminar</a></h3>
+
+<h2>Nível de Complexidade</h2>
+
+<p>Para definir o nível de complexidade, podemos construir a árvore baseado no pseudocódigo:</p>
+
+<p class="figure"><img alt="Árvore de Complexidade" src="img/arvore.png" title="Árvore de Complexidade" class="raster"/></p>
+
+<p>Nessa árvore:</p>
+
+<p><strong>Left</strong> é uma função que retorna o numero formado pelos elementos do meio do numero indicado até o digito de maior significância do numero (Ex: \(left(ijkl) = ij\));</p>
+
+<p><strong>Right</strong> é uma função que retorna o numero formado pelos elementos do meio do numero indicado até o digito de menor significância do numero (Ex: \(right(ijkl) = kl\));</p>
+
+<p><strong>a</strong> e <strong>b</strong> são quaisquer numeros de 1 digito.</p>
+
+<p>Assim, supondo que o numero de digitos de <em>u</em> e <em>v</em> são potências de 2, temos que a altura \(h\) é: \(h = log_2n + 1\);</p>
+
+<p>Também temos que o numero de operações serão: \(nOp = 3^{log_2n+1}\);</p>
+
+<p>Assim, fazendo algumas manipulações matemáticas temos:</p>
+
+<p>\[ nOp = 3 \cdot 3^{log_2n} \]
+\[ nOp = 3 \cdot 3^{log_3n/log_32} \]
+\[ nOp = 3 \cdot n^{1/log_23} \]
+\[ nOp = 3 \cdot n^{log_32} \]</p>
+
+<p>Assim, temos que a complexidade do algorismo é \( O(n^{log_32})  \)</p>
+
+      </main>
+      <footer>
+        <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+          <img alt="Creative Commons Attribution-ShareAlike 4.0 International License" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" title="Creative Commons Attribution-ShareAlike 4.0 International License"/>
+        </a>
+        © 2020 Desafios de Programação
+      </footer>
+    </div>
+  </body>
+</html>

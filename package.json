@@ -1,0 +1,26 @@
+{
+  "name": "orfalius",
+  "version": "1.0.0",
+  "description": "",
+  "main": "orfalius.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hashiprobr/orfalius.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hashiprobr/orfalius/issues"
+  },
+  "homepage": "https://github.com/hashiprobr/orfalius#readme",
+  "dependencies": {
+    "del": "^3.0.0",
+    "gulp": "^4.0.2",
+    "gulp-cached": "^1.1.1",
+    "handlebars": "^4.7.6",
+    "markdown": "^0.5.0"
+  }
+}
